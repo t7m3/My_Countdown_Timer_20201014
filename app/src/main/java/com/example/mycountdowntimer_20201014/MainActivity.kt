@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         timerText.text = "3:00"
         //val timer = MyCountDownTimer(3 * 60 * 1000, 100)
-        val timer = MyCountDownTimer(10 * 1000, 100)
+        val timer = MyCountDownTimer(10 * 1000 + 999, 100)
 
         playStop.setOnClickListener {
             timer.isRunning = when (timer.isRunning) {
