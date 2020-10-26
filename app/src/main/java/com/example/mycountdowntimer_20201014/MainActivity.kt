@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.DisplayMetrics
+import android.view.MotionEvent
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.CompletableFuture
 
@@ -62,6 +63,10 @@ class MainActivity : AppCompatActivity() {
         imageViewEnemy.x = 10F
         imageViewEnemy.y = 100F
 
+        // mageViewPlayer の初期位置の設定
+        imageViewPlayer.x = 50F
+        imageViewPlayer.y = screenHeight.toFloat() * 0.6F
+
         playStop.setOnClickListener {
             timer.isRunning = when (timer.isRunning) {
                 true ->  {
@@ -87,5 +92,32 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         soundPool.release()
+    }
+
+
+    //画面タッチのメソッドの定義
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+
+        textView.text = "X座標：${event.x}　Y座標：${event.y}"
+
+        when (event.action) {
+
+            MotionEvent.ACTION_DOWN -> {
+                textView.append("　ダウン")
+                imageViewPlayer.x = event.x
+            }
+
+            MotionEvent.ACTION_UP -> textView.append("　アップ")
+
+            MotionEvent.ACTION_MOVE -> {
+                textView.append("　ムーブ")
+                imageViewPlayer.x = event.x
+            }
+
+            MotionEvent.ACTION_CANCEL -> textView.append("　キャンセル")
+        }
+
+        return true
+
     }
 }
